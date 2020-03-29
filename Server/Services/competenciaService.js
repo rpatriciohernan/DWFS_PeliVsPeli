@@ -144,6 +144,12 @@ class Service {
         WHERE id=${parseInt(idCompetencia)};`
         return await db.query(statement);
     }
+
+    async updateCompetencia(competencia){
+        const statement = `UPDATE competencias.competencia SET nombre = '${competencia.nombre}' 
+        WHERE id=${parseInt(competencia.id)};`
+        return await db.query(statement);
+    }
 }
 
 module.exports = Service;

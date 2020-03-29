@@ -197,6 +197,29 @@ class Controller {
       return res.status(500).send("Error at delete competencia. Try again.")
     }
   }
+
+  async editCompetencia(req, res){
+    try{
+
+      const competencia = await service.selectCompetenciaById(req.params.id);
+
+      if(!competencia) {
+        return res.status(404).json({
+          message: "Competencia not found."
+        });
+      }
+      
+      competencia.nombre = req.body.nombre;
+
+      const result = await service.updateCompetencia(competencia);
+
+      return res.status(202).json(result);
+
+    }catch(error){
+      console.log("Error found at Delete-Competencia query: ", error.message);
+      return res.status(500).send("Error at delete competencia. Try again.")
+    }
+  }
 }
 
 module.exports = Controller;
