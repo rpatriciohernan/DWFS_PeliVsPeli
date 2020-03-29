@@ -6,6 +6,18 @@ class Competencia {
         this.actor = element.actor_id;
         this.director = element.director_id;
     }
+
+    setNombreGenero(nombre){
+        this.genero_nombre = nombre;
+    }
+
+    setNombreActor(nombre){
+        this.actor_nombre = nombre;
+    }
+
+    setNombreDirector(nombre){
+        this.director_nombre = nombre;
+    }
 }
 
 module.exports = Competencia;

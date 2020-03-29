@@ -11,5 +11,6 @@ router.get("/:id/peliculas", controller.getPeliculasCompetencia);
 router.post("/:id/voto", controller.postVoto);
 router.get("/:id/resultados", controller.getResultados);
 router.delete("/:id/votos", controller.resetVotos);
+router.delete("/:id", controller.deleteCompetencia);
 
 module.exports = router;

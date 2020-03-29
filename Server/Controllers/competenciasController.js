@@ -19,12 +19,26 @@ class Controller {
   async getCompetenciaById(req, res){
     try {
       const competencia = await service.selectCompetenciaById(req.params.id);
-
       if(!competencia) { 
         return res.status(404).json({
           message: "Competencia not found."
         });
       };
+      
+      if(competencia.actor){      
+        const nombre = await service.selectActorById(competencia.actor);
+        competencia.setNombreActor(nombre.nombre);
+      }
+
+      if(competencia.genero){
+        const nombre = await service.selectGeneroById(competencia.genero);
+        competencia.setNombreGenero(nombre.nombre);
+      }
+      
+      if(competencia.director){
+        const nombre = await service.selectDirectorById(competencia.director);
+        competencia.setNombreDirector(nombre.nombre);
+      }
 
       return res.status(200).json(competencia); 
 
@@ -158,6 +172,29 @@ class Controller {
     }catch(error){
       console.log("Error found at Delete-Votos-Competencia query: ", error.message);
       return res.status(500).send("Error at reset competencia. Try again.")
+    }
+  }
+
+  async deleteCompetencia(req, res){
+    try{
+
+      const competencia = await service.selectCompetenciaById(req.params.id);
+
+      if(!competencia) {
+        return res.status(404).json({
+          message: "Competencia not found."
+        });
+      }
+
+      await service.deleteVotos(competencia.id);
+      
+      const result = await service.deleteCompetencia(competencia.id);
+
+      return res.status(202).json(result);
+
+    }catch(error){
+      console.log("Error found at Delete-Competencia query: ", error.message);
+      return res.status(500).send("Error at delete competencia. Try again.")
     }
   }
 }

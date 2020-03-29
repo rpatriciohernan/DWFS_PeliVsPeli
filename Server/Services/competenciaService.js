@@ -13,13 +13,13 @@ class Service {
 
     async selectCompetenciaList() {
         const competencias = [];
-        const result = await db.query("SELECT * FROM competencias.competencia");
+        const result = await db.query("SELECT * FROM competencias.competencia WHERE active=TRUE");
         result.forEach(element => competencias.push(new Competencia(element)));
         return competencias;
     }
 
     async selectCompetenciaById(idCompetencia){
-        const result = await db.query(`SELECT * FROM competencias.competencia WHERE id=${parseInt(idCompetencia)}`);
+        const result = await db.query(`SELECT * FROM competencias.competencia WHERE active=TRUE AND id=${parseInt(idCompetencia)}`);
         if (!result) {
             return null;
         } else {
@@ -136,8 +136,13 @@ class Service {
     async deleteVotos(idCompetencia){
         const statement = `UPDATE competencias.voto SET active = false
         WHERE competencia_id=${parseInt(idCompetencia)};`
-        const result = await db.query(statement);
-        return result;
+        return await db.query(statement);
+    }
+
+    async deleteCompetencia(idCompetencia){
+        const statement = `UPDATE competencias.competencia SET active = false
+        WHERE id=${parseInt(idCompetencia)};`
+        return await db.query(statement);
     }
 }
 
