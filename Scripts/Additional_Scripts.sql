@@ -61,8 +61,3 @@ ALTER active SET DEFAULT true;
 
 UPDATE competencias.competencia 
 SET active = true;
-
-/*BORRADOR*/
-SELECT * FROM genero
-
-SELECT * FROM competencias.competencia WHERE active=TRUE
