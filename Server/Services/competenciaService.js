@@ -69,17 +69,17 @@ class Service {
 
         var statementCondition = ` WHERE 1=1`
 
-        if(competencia.actor){ 
+        if(parseInt(competencia.actor)){ 
             statementSelection += ` INNER JOIN competencias.actor_pelicula as r1 ON r1.pelicula_id = p.id`;
             statementCondition +=` AND r1.actor_id = ${parseInt(competencia.actor)}`;
         };
 
-        if(competencia.director){ 
+        if(parseInt(competencia.director)){ 
             statementSelection += ` INNER JOIN competencias.director_pelicula as r2 ON r2.pelicula_id = p.id`;
             statementCondition += ` AND r2.director_id = ${parseInt(competencia.director)}`;
         };
 
-        if(competencia.genero){ 
+        if(parseInt(competencia.genero)){ 
             statementCondition += ` AND genero_id=${parseInt(competencia.genero)}`
         };
 
@@ -127,8 +127,10 @@ class Service {
         if (competencia.actor !== '0') {
             statement += ` ${parseInt(competencia.actor)})`;
         }else{
-            statement += ` NULL)`;
+            statement += ` NULL,`;
         };     
+
+        statement += `1 )`; 
 
         return await db.query(statement);
     }

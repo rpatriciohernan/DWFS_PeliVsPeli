@@ -138,7 +138,7 @@ class Controller {
         };
       };
 
-      const opciones = await service.selectOpcion(req.body)
+      const opciones = await service.selectOpcion(req.body);
 
       if(opciones.peliculas.length < 2) {
         return res.status(404).json({
